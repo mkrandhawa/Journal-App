@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { ChartBarIcon, CalendarDaysIcon, FireIcon, PencilSquareIcon } from '@heroicons/react/24/outline'; 
 import InputField from './inputFields';
 
+
+const today = new Date().toISOString().split('T')[0];
+
 const initialFormData = {
     
     caloriesConsumed: '',
@@ -11,7 +14,7 @@ const initialFormData = {
     carbsGrams: '',
     fatGrams: '',
     notes: '',
-    date: new Date().toISOString().split('T')[0], 
+    date: today, 
   
 }
 export default function DietEntryForm({ onEntryCreated }) {
@@ -42,6 +45,12 @@ export default function DietEntryForm({ onEntryCreated }) {
       setMessage({ type: 'error', text: 'Please enter Calories Consumed and Target Calories.' });
       setLoading(false);
       return;
+    }
+
+    if (formData.date > today) {
+        setMessage({ type: 'error', text: 'Date cannot be in the future.' });
+        setLoading(false);
+        return;
     }
 
     const payload = {
@@ -86,35 +95,6 @@ export default function DietEntryForm({ onEntryCreated }) {
       setLoading(false);
     }
   };
-
-//   const InputField = ({ label, name, type = 'number', placeholder, required = false, step = 1, min = 0, icon: Icon, onChange, isMacronutrient = false , value}) => (
-//     <div className="flex flex-col">
-//       <label htmlFor={name} className={`mb-1 text-sm font-medium ${isMacronutrient ? 'text-gray-500' : 'text-gray-700'}`}>
-//         {label} {required && <span className="text-red-500">*</span>}
-//       </label>
-//       <div className="relative">
-//         {Icon && (
-//           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-//             <Icon className="w-5 h-5 text-gray-400" />
-//           </div>
-//         )}
-//         <input
-//           id={name}
-//           name={name}
-//           type={type}
-//           value={value}
-//           onChange={onChange}
-//           placeholder={placeholder}
-//           required={required}
-//           min={min}
-//           step={step}
-//           className={`w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition duration-150 ${Icon ? 'pl-10' : ''} text-gray-600`}
-//         />
-//       </div>
-//     </div>
-//   );
-
-
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
         <h2 className="text-3xl font-extrabold text-gray-800 flex items-center border-b pb-3 border-gray-100">
@@ -132,6 +112,7 @@ export default function DietEntryForm({ onEntryCreated }) {
                 value={formData.date}
                 onChange={handleChange}
                 icon={CalendarDaysIcon}
+                max={today}
             />
             <InputField 
                 label="Target Calories (kcal)" 

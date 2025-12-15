@@ -1,63 +1,19 @@
-// src/components/DietHistory.js
 'use client';
-import { useEffect, useState } from 'react';
-import { CalendarIcon, TrendingUpIcon, DocumentTextIcon } from '@heroicons/react/24/outline'; // Added DocumentTextIcon
+import { CalendarIcon, ChartBarIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid';
 
-// Helper function to format the date
 const formatDate = (isoString) => {
     return new Date(isoString).toLocaleDateString('en-US', {
         year: 'numeric', month: 'short', day: 'numeric'
     });
 };
 
-export default function DietHistory({ latestEntry }) {
-    const [history, setHistory] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const fetchHistory = async () => {
-        setLoading(true);
-        try {
-            const response = await fetch('/api/diet');
-            if (!response.ok) {
-                throw new Error('Could not fetch data.');
-            }
-            const result = await response.json();
-            setHistory(result.data);
-        } catch (error) {
-            console.error("Error fetching diet history:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    // 1. Fetch data on initial component load
-    useEffect(() => {
-        fetchHistory();
-    }, []);
-
-    // 2. Update the history list when a new entry is created (via prop from form submission)
-    useEffect(() => {
-        if (latestEntry && history.findIndex(e => e._id === latestEntry._id) === -1) {
-            // Prepend the new entry to the list
-            setHistory(prevHistory => [latestEntry, ...prevHistory]);
-        }
-    }, [history, latestEntry]);
-
-
-    if (loading) {
-        return (
-            <div className="p-8 text-center text-gray-400 flex justify-center items-center">
-                <svg className="animate-spin h-5 w-5 mr-3 text-blue-500" viewBox="0 0 24 24">...</svg>
-                Loading history...
-            </div>
-        );
-    }
+export default function DietHistory({ history}) {
 
     if (history.length === 0) {
         return (
             <div className="p-8 text-center text-gray-500 bg-gray-50 rounded-2xl">
-                <TrendingUpIcon className="w-8 h-8 mx-auto text-blue-400 mb-2" />
+                <ChartBarIcon className="w-8 h-8 mx-auto text-blue-400 mb-2" />
                 <p className="text-lg font-medium">No diet entries logged yet.</p>
                 <p className="text-sm text-gray-400">Your history will appear here after your first submission.</p>
             </div>
@@ -68,7 +24,6 @@ export default function DietHistory({ latestEntry }) {
         <div className="space-y-4 pt-2">
             {history.map((entry) => {
                 const goalMet = entry.caloriesConsumed <= entry.targetCalories;
-
                 return (
                     <div 
                         key={entry._id} 
@@ -82,7 +37,6 @@ export default function DietHistory({ latestEntry }) {
                                 {formatDate(entry.date)}
                             </span>
                             
-                            {/* Goal Status Badge */}
                             <span  className={`flex items-center px-4 py-1 text-sm font-bold rounded-full transition duration-150 shadow-sm
                                 ${goalMet ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'}
                             `}>
@@ -122,7 +76,7 @@ export default function DietHistory({ latestEntry }) {
                             </div>
                         </div>
                         
-                        {/* --- NOTES SECTION (NEW) --- */}
+                        {/* --- NOTES SECTION --- */}
                         {entry.notes && (
                             <div className="mt-4 pt-3 border-t border-gray-100">
                                 <p className="text-sm font-semibold text-gray-600 mb-1 flex items-center">
