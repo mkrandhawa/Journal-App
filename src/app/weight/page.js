@@ -62,12 +62,11 @@ export default function WeightTrackerPage() {
         return (
             <div className="max-w-6xl mx-auto space-y-12 pb-20 animate-in fade-in duration-700">
                 
-                {/* --- HEADER: Left Aligned to match Diet --- */}
                 <div className="border-b border-indigo-50 pb-8">
-                    <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-violet-600 tracking-tighter">
+                    <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-violet-600 tracking-tighter leading-[1.3] block">
                         {userName}&apos;s Journey
                     </h1>
-                    <p className="text-xl text-indigo-900/40 font-medium mt-2 italic">
+                    <p className="text-xl text-indigo-900/40 font-medium mt-2 italic ">
                         Small steps, big changes. Keep moving forward.
                     </p>
                 </div>

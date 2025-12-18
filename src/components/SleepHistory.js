@@ -41,7 +41,7 @@ export default function SleepHistory({ history }) {
                     >
                         <div className="absolute -inset-1 bg-gradient-to-r from-indigo-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                        <div className="relative z-10 md:w-32 flex-shrink-0">
+                        <div className="relative z-10 md:w-28 flex-shrink-0">
                             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 mb-1">Night of</p>
                             <p className="text-sm font-bold text-slate-700 whitespace-nowrap">{date}</p>
                         </div>
@@ -53,7 +53,7 @@ export default function SleepHistory({ history }) {
                             </p>
                         </div>
 
-                        <div className="relative z-10 flex flex-wrap items-center gap-3 md:w-64 flex-shrink-0">
+                        <div className="relative z-10 flex flex-wrap items-center gap-3 md:w-72 flex-shrink-0">
                             <div className="px-4 py-1.5 rounded-full bg-slate-900 text-white text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-slate-200">
                                 {entry.sleepQuality} Quality
                             </div>

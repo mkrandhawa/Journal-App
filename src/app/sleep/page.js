@@ -54,9 +54,8 @@ export default function SleepTrackerPage() {
         return (
             <div className="max-w-6xl mx-auto space-y-12 pb-20 px-4 animate-in fade-in duration-700">
                 
-                {/* --- HEADER: Left Aligned & Color Synced --- */}
                 <div className="border-b border-slate-100 pb-8 ">
-                    <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-indigo-600 tracking-tighter">
+                    <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-indigo-600 tracking-tighter  leading-[1.3] block">
                         {userName}&apos;s Sleep Lab
                     </h1>
                     <p className="text-xl text-slate-400 font-medium mt-2 italic">
