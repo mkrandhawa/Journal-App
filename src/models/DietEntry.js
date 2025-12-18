@@ -1,4 +1,3 @@
-// src/models/DietEntry.js
 import mongoose from 'mongoose';
 
 const DietEntrySchema = new mongoose.Schema({
@@ -12,7 +11,6 @@ const DietEntrySchema = new mongoose.Schema({
         type: Date,
         required: [true, 'Date is required'],
         default: Date.now,
-        unique: true, 
     },
 
     caloriesConsumed: {
