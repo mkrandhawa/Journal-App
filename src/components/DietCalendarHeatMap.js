@@ -4,19 +4,17 @@ import { FireIcon } from '@heroicons/react/24/outline';
 
 const getDayColor = (entry) => {
     if (!entry) {
-        return 'bg-gray-100'; // No entry
+        return 'bg-gray-100'; 
     }
     if (entry.caloriesConsumed <= entry.targetCalories) {
-        return 'bg-green-400 hover:bg-green-500'; // Goal Met
+        return 'bg-green-400 hover:bg-green-500'; 
     }
-    return 'bg-red-400 hover:bg-red-500'; // Over Target
+    return 'bg-red-400 hover:bg-red-500'; 
 };
 
-// Generates the labels for the day of the week
 const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default function DietCalendarHeatmap({ history }) {
-    // Process the history into a map for quick lookup by date (YYYY-MM-DD)
     const dailyData = useMemo(() => {
         const map = new Map();
         history.forEach(entry => {
@@ -26,23 +24,19 @@ export default function DietCalendarHeatmap({ history }) {
         return map;
     }, [history]);
 
-    // Determine the start date (the day of the week for the first day of the month)
-    const today = new Date();
+    const today = useMemo(() => new Date(), []);
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const startDayOfWeek = firstDayOfMonth.getDay(); // 0 for Sunday, 1 for Monday...
 
     const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
 
-    // Generate the days array for the grid
     const calendarDays = useMemo(() => {
         const days = [];
 
-        // Add blank placeholders for days before the 1st
         for (let i = 0; i < startDayOfWeek; i++) {
             days.push({ id: `blank-${i}`, isPlaceholder: true });
         }
 
-        // Add the actual days of the month
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(today.getFullYear(), today.getMonth(), day);
             const dateKey = date.toISOString().split('T')[0];
@@ -63,7 +57,6 @@ export default function DietCalendarHeatmap({ history }) {
     return (
         <div className="p-4 bg-white rounded-2xl shadow-inner border border-gray-100">
             <h3 className="text-xl font-bold text-gray-700 mb-4 flex items-center">
-                <FireIcon className="w-5 h-5 mr-2 text-orange-400" />
                 {today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} Overview
             </h3>
 
