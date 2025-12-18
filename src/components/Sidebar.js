@@ -1,4 +1,4 @@
-'use client'; // Required because it uses usePathname and AuthButtons
+'use client';
 
 import Link from "next/link";
 import { usePathname } from 'next/navigation'; 
@@ -15,9 +15,10 @@ import {
 const navItems = [
     { name: "Dashboard", href: "/", icon: HomeIcon },
     { name: "Diet Tracker", href: "/diet", icon: FireIcon },
+    { name: "Weight History", href: "/weight", icon: ScaleIcon },
     { name: "Gym Log", href: "/gym", icon: BoltIcon },
-    { name: "Sleep Log", href: "/sleep", icon: MoonIcon },
-    { name: "Weight History", href: "/weight", icon: ScaleIcon }
+    { name: "Sleep Log", href: "/sleep", icon: MoonIcon }
+    
 ];
 
 export default function Sidebar() {
