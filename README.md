@@ -1,5 +1,5 @@
 # Journal-App
-An Next.js app designed for Journaling.
+
 A minimalist, high-performance health tracking dashboard built with **Next.js 15**, **Tailwind CSS**, and **MongoDB**. This application features a "Soft Midnight" aesthetic and provides a unified "lab" environment for tracking Weight, Diet, Sleep, and Hydration.
 
 ---
