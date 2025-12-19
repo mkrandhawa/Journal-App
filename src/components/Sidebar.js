@@ -6,9 +6,9 @@ import AuthButtons from "./AuthButtons";
 import {
     HomeIcon,
     FireIcon,     // For Diet/Calories
-    BoltIcon,     // For Gym/Energy
     MoonIcon,     // For Sleep
-    ScaleIcon     // For Weight
+    ScaleIcon,     // For Weight
+    BeakerIcon   // For Water   
 } from '@heroicons/react/24/outline'; 
 
 // Mapping the routes to their corresponding icons
@@ -16,9 +16,8 @@ const navItems = [
     { name: "Dashboard", href: "/", icon: HomeIcon },
     { name: "Diet Log", href: "/diet", icon: FireIcon },
     { name: "Weight Log", href: "/weight", icon: ScaleIcon },
-    { name: "Gym Log", href: "/gym", icon: BoltIcon },
-    { name: "Sleep Log", href: "/sleep", icon: MoonIcon }
-    
+     { name: "Sleep Log", href: "/sleep", icon: MoonIcon },
+    { name: "Water Log", href: "/water", icon: BeakerIcon }
 ];
 
 export default function Sidebar() {
