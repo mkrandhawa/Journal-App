@@ -2,104 +2,160 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
-
+import { useEffect, useState } from "react";
+import Link from 'next/link';
+import { 
+  ScaleIcon, 
+  MoonIcon, 
+  BeakerIcon, 
+  ArrowTrendingDownIcon,
+  FireIcon
+} from '@heroicons/react/24/outline';
 
 export default function Home() {
-
-  const {data: session, status} = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
+  const [stats, setStats] = useState({
+    weight: null,
+    sleep: null,
+    water: null,
+    diet: null,
+    loading: true
+  });
+
+  const fetchDashboardData = async () => {
+    try {
+      const [weightRes, sleepRes, waterRes, dietRes] = await Promise.all([
+        fetch('/api/weight'),
+        fetch('/api/sleep'),
+        fetch('/api/water'),
+        fetch('/api/diet')
+      ]);
+
+      const [w, s, wa, d] = await Promise.all([
+        weightRes.json(),
+        sleepRes.json(),
+        waterRes.json(),
+        dietRes.json()
+      ]);
+
+      const todayStr = new Date().toDateString();
+
+      setStats({
+        weight: w.data?.[0] || null,
+        sleep: s.data?.[0] || null,
+        water: wa.data?.find(entry => new Date(entry.date).toDateString() === todayStr) || null,
+        diet: d.data?.find(entry => new Date(entry.date).toDateString() === todayStr) || null,
+        loading: false
+      });
+    } catch (error) {
+      console.error("Dashboard fetch error:", error);
+      setStats(prev => ({ ...prev, loading: false }));
+    }
+  };
 
   useEffect(() => {
-    if (status === 'unauthenticated' && status !== 'loading'){
+    if (status === 'unauthenticated' && status !== 'loading') {
       router.push('/login');
+    } else if (status === 'authenticated') {
+      fetchDashboardData();
     }
   }, [status, router]);
 
-  if (status === 'loading'){
+  if (status === 'loading' || stats.loading) {
     return (
-      <div className="flex flex-col items-center justify-center pt-20">
-        <svg className="animate-spin h-8 w-8 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <p className="mt-4 text-xl text-gray-500">Loading Dashboard...</p>
-      </div>
-    )
-  }
-  
-  if (status === 'authenticated'){
-    const userName = session.user.name ? session.user.name.split(' ')[0] : 'User'; 
-    
-    return (
-      <div className="space-y-10">
-        
-        {/* Welcome Banner */}
-        <div className="p-8 bg-gradient-to-r from-indigo-600 to-indigo-500 rounded-2xl shadow-xl text-white">
-          <h1 className="text-4xl font-extrabold mb-2">
-            Welcome back, {userName}!
-          </h1>
-          <p className="text-indigo-200">
-            It is time to log your progress and track your goals.
-          </p>
-        </div>
-
-        {/* Quick Actions Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <button className="flex items-center justify-center p-5 bg-white rounded-xl shadow-lg border border-green-100 hover:bg-green-50 transition transform hover:-translate-y-0.5">
-            <PlusCircleIcon className="w-6 h-6 text-green-500 mr-2" />
-            <span className="text-lg font-semibold text-gray-700">New Entry</span>
-          </button>
-          
-          <div className="p-5 bg-white rounded-xl shadow-lg border border-blue-100">
-            <h3 className="text-lg font-semibold text-blue-600 mb-1">Trends</h3>
-            <p className="text-sm text-gray-500">View overall statistics and trends.</p>
-          </div>
-          
-          <div className="p-5 bg-white rounded-xl shadow-lg border border-yellow-100">
-            <h3 className="text-lg font-semibold text-yellow-600 mb-1">Journal</h3>
-            <p className="text-sm text-gray-500">Review past journal entries.</p>
-          </div>
-        </div>
-
-        {/* Data Snapshots/Stat Cards (Using Dummy Data/Placeholders for now) */}
-        <h2 className="text-2xl font-bold text-gray-700 mt-8 mb-4">Your Health Snapshot</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            
-            {/* Stat Card 1: Weight */}
-            <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-l-red-500">
-                <p className="text-sm font-medium text-gray-500">Current Weight</p>
-                <p className="text-3xl font-extrabold text-gray-900 mt-1">185.4 <span className="text-lg font-normal text-gray-400">lbs</span></p>
-                <p className="text-xs text-red-500 mt-2">▲ 0.2 lbs this week</p>
-            </div>
-
-            {/* Stat Card 2: Calories */}
-            <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-l-blue-500">
-                <p className="text-sm font-medium text-gray-500">Avg Daily Deficit</p>
-                <p className="text-3xl font-extrabold text-gray-900 mt-1">-550 <span className="text-lg font-normal text-gray-400">kcal</span></p>
-                <p className="text-xs text-blue-500 mt-2">Goal: 500 kcal deficit</p>
-            </div>
-            
-            {/* Stat Card 3: Sleep */}
-            <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-l-green-500">
-                <p className="text-sm font-medium text-gray-500">Last Night&apos;s Sleep</p>
-                <p className="text-3xl font-extrabold text-gray-900 mt-1">7h 45m</p>
-                <p className="text-xs text-green-500 mt-2">Slept 95% of goal</p>
-            </div>
-            
-            {/* Stat Card 4: Workouts */}
-            <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-l-yellow-500">
-                <p className="text-sm font-medium text-gray-500">Workouts Logged</p>
-                <p className="text-3xl font-extrabold text-gray-900 mt-1">3 <span className="text-lg font-normal text-gray-400">this week</span></p>
-                <p className="text-xs text-yellow-500 mt-2">1 more to go!</p>
-            </div>
-
-        </div>
-        
+      <div className="flex flex-col items-center justify-center pt-32 space-y-4">
+        <div className="w-10 h-10 border-4 border-indigo-100 border-t-indigo-500 rounded-full animate-spin" />
+        <p className="text-indigo-900/40 font-medium tracking-widest uppercase text-xs">Assembling your health lab...</p>
       </div>
     );
   }
 
-  return null;
+  const userName = session.user.name ? session.user.name.split(' ')[0] : 'User';
+
+  return (
+    <div className="max-w-6xl mx-auto space-y-12 pb-20 px-4">
+      
+      {/* --- HEADER --- */}
+      <div className="border-b border-slate-100 pb-8">
+          <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-indigo-600 tracking-tighter leading-[1.1] block">
+              Welcome back, {userName}
+          </h1>
+          <p className="text-xl text-slate-400 font-medium mt-2 italic">
+              Your body is a lab. Your data is the formula.
+          </p>
+      </div>
+
+      {/* --- QUICK ACTIONS: 4 COLUMN GRID --- */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-150">
+        <Link href="/weight" className="flex flex-col items-center justify-center p-6 bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-50 hover:bg-indigo-50 transition-all group">
+          <ScaleIcon className="w-6 h-6 text-indigo-500 mb-2" />
+          <span className="text-sm font-bold text-slate-700">Weight</span>
+        </Link>
+        <Link href="/diet" className="flex flex-col items-center justify-center p-6 bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-50 hover:bg-emerald-50 transition-all group">
+          <FireIcon className="w-6 h-6 text-emerald-500 mb-2" />
+          <span className="text-sm font-bold text-slate-700">Diet</span>
+        </Link>
+        <Link href="/water" className="flex flex-col items-center justify-center p-6 bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-50 hover:bg-cyan-50 transition-all group">
+          <BeakerIcon className="w-6 h-6 text-cyan-500 mb-2" />
+          <span className="text-sm font-bold text-slate-700">Water</span>
+        </Link>
+        <Link href="/sleep" className="flex flex-col items-center justify-center p-6 bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-50 hover:bg-slate-900 transition-all group">
+          <MoonIcon className="w-6 h-6 text-slate-400 group-hover:text-amber-300 mb-2" />
+          <span className="text-sm font-bold text-slate-700 group-hover:text-white">Sleep</span>
+        </Link>
+      </div>
+
+      {/* --- SNAPSHOTS --- */}
+      <div className="space-y-8 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+        <div className="flex items-center gap-6 px-4">
+            <h2 className="text-sm font-bold text-slate-300 uppercase tracking-[0.4em] whitespace-nowrap">Daily Snapshot</h2>
+            <div className="h-px w-full bg-slate-100" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            {/* Weight Card */}
+            <div className="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/40 border border-slate-50">
+                <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Weight</p>
+                <p className="text-4xl font-black text-slate-800">{stats.weight?.weight || '--'}<span className="text-sm ml-1 text-slate-400">kg</span></p>
+                <div className="mt-4 flex items-center text-[10px] font-bold text-indigo-500 uppercase">
+                   <ArrowTrendingDownIcon className="w-3 h-3 mr-1" /> Goal: {stats.weight?.targetWeight}kg
+                </div>
+            </div>
+
+            {/* Diet Card */}
+            <div className="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/40 border border-slate-50">
+                <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Nutrition</p>
+                <p className="text-4xl font-black text-slate-800">{stats.diet?.caloriesConsumed || '0'}<span className="text-sm ml-1 text-slate-400">kcal</span></p>
+                <div className="mt-4 flex items-center text-[10px] font-bold text-emerald-500 uppercase">
+                   <FireIcon className="w-3 h-3 mr-1" /> Protein: {stats.diet?.proteinGrams || '0'}g
+                </div>
+            </div>
+
+          
+
+            {/* Sleep Card */}
+            <div className="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/40 border border-slate-50">
+                <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Recovery</p>
+                <p className="text-4xl font-black text-slate-800">{stats.sleep?.hoursSlept || '0'}<span className="text-sm ml-1 text-slate-400">hrs</span></p>
+                <p className="text-[10px] mt-4 font-black text-amber-500 uppercase tracking-tight">Quality: {stats.sleep?.sleepQuality || 'N/A'}</p>
+            </div>
+
+              {/* Water Card */}
+            <div className="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/40 border border-slate-50">
+                <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Hydration</p>
+                <p className="text-4xl font-black text-slate-800">{stats.water?.amountMl || '0'}<span className="text-sm ml-1 text-slate-400">ml</span></p>
+                <div className="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                   <div 
+                    className="bg-cyan-500 h-full transition-all duration-1000" 
+                    style={{ width: `${Math.min(((stats.water?.amountMl || 0) / (stats.water?.targetMl || 2000)) * 100, 100)}%` }}
+                   />
+                </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  );
 }
