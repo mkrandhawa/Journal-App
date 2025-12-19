@@ -4,7 +4,7 @@ A minimalist, high-performance health tracking dashboard built with **Next.js 15
 
 ---
 
-## ✨ Features
+## Features
 
 * **Unified Dashboard:** A responsive "Snapshot" of your daily health pillars.
 * **Weight Journey:** Track progress with target goals and historical trends.
@@ -16,7 +16,7 @@ A minimalist, high-performance health tracking dashboard built with **Next.js 15
 
 ---
 
-##Tech Stack
+## Tech Stack
 
 | Technology | Purpose |
 | :--- | :--- |
