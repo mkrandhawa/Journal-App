@@ -78,10 +78,10 @@ export default function Home() {
       
       {/* --- HEADER --- */}
       <div className="border-b border-slate-100 pb-8">
-          <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-indigo-600 tracking-tighter leading-[1.1] block">
+          <h1 className="text-6xl sm:text-6xl md:text-6xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-indigo-600 tracking-tighter leading-[1.1] block">
               Welcome back, {userName}
           </h1>
-          <p className="text-xl text-slate-400 font-medium mt-2 italic">
+          <p className=" text-base  sm:text-md md:text-xl lg:text-xl text-slate-400 font-medium mt-2 italic">
               Your body is a lab. Your data is the formula.
           </p>
       </div>
