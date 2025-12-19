@@ -63,7 +63,7 @@ export async function POST(request) {
                 $set: { targetMl: targetMl }  
             },
             { 
-                upsert: true,
+                upsert: true, // if it doesn't exist, create it
                 new: true     
             }
         );
