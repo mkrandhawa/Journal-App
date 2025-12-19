@@ -53,7 +53,7 @@ export default function SleepHistory({ history }) {
                             </p>
                         </div>
 
-                        <div className="relative z-10 flex flex-wrap items-center gap-3 md:w-72 flex-shrink-0">
+                        <div className="relative z-10 flex flex-wrap items-center gap-3 md:w-86 flex-shrink-0">
                             <div className="px-4 py-1.5 rounded-full bg-slate-900 text-white text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-slate-200">
                                 {entry.sleepQuality} Quality
                             </div>

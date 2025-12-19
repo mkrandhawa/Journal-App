@@ -14,8 +14,8 @@ import {
 // Mapping the routes to their corresponding icons
 const navItems = [
     { name: "Dashboard", href: "/", icon: HomeIcon },
-    { name: "Diet Tracker", href: "/diet", icon: FireIcon },
-    { name: "Weight History", href: "/weight", icon: ScaleIcon },
+    { name: "Diet Log", href: "/diet", icon: FireIcon },
+    { name: "Weight Log", href: "/weight", icon: ScaleIcon },
     { name: "Gym Log", href: "/gym", icon: BoltIcon },
     { name: "Sleep Log", href: "/sleep", icon: MoonIcon }
     
