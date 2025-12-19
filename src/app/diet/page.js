@@ -62,9 +62,8 @@ export default function DietTrackerPage() {
         return (
             <div className="max-w-6xl mx-auto space-y-12 pb-20 animate-in fade-in duration-700">
                 
-                {/* --- MINIMALIST HEADER --- */}
                 <div className="border-b border-emerald-50 pb-8">
-                    <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 to-teal-500 tracking-tighter">
+                    <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 to-teal-500 tracking-tighter leading-[1.3] block">
                         {userName}&apos;s Nutrition
                     </h1>
                     <p className="text-xl text-emerald-900/40 font-medium mt-2 italic">
@@ -95,15 +94,15 @@ export default function DietTrackerPage() {
                                 <div className="grid grid-cols-3 gap-4 w-full pt-4">
                                     <div className="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/10 text-center">
                                         <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Protein</p>
-                                        <p className="text-xl font-bold">{history[0].protein}g</p>
+                                        <p className="text-xl font-bold">{history[0].proteinGrams}g</p>
                                     </div>
                                     <div className="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/10 text-center">
                                         <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Carbs</p>
-                                        <p className="text-xl font-bold">{history[0].carbs}g</p>
+                                        <p className="text-xl font-bold">{history[0].carbsGrams}g</p>
                                     </div>
                                     <div className="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/10 text-center">
                                         <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Fat</p>
-                                        <p className="text-xl font-bold">{history[0].fat}g</p>
+                                        <p className="text-xl font-bold">{history[0].fatGrams}g</p>
                                     </div>
                                 </div>
                             </div>
