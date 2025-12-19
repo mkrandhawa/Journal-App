@@ -8,7 +8,6 @@ import {
   ScaleIcon, 
   MoonIcon, 
   BeakerIcon, 
-  CakeIcon,
   ArrowTrendingDownIcon,
   FireIcon
 } from '@heroicons/react/24/outline';
@@ -94,7 +93,7 @@ export default function Home() {
           <span className="text-sm font-bold text-slate-700">Weight</span>
         </Link>
         <Link href="/diet" className="flex flex-col items-center justify-center p-6 bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-50 hover:bg-emerald-50 transition-all group">
-          <CakeIcon className="w-6 h-6 text-emerald-500 mb-2" />
+          <FireIcon className="w-6 h-6 text-emerald-500 mb-2" />
           <span className="text-sm font-bold text-slate-700">Diet</span>
         </Link>
         <Link href="/water" className="flex flex-col items-center justify-center p-6 bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-50 hover:bg-cyan-50 transition-all group">
