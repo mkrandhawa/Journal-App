@@ -1,8 +1,6 @@
-// src/components/AuthButtons.js (Excerpt)
 'use client';
 import Image from 'next/image';
 import { signIn, signOut, useSession } from 'next-auth/react';
-// ...
 
 export default function AuthButtons() {
   const { data: session, status } = useSession();
@@ -13,10 +11,8 @@ export default function AuthButtons() {
 
   if (session) {
     return (
-      // Updated styling for signed-in state
       <div className="p-4 border-t border-gray-100 bg-gray-50"> 
         <div className="flex items-center space-x-3 mb-2">
-            {/* Use user image if available, otherwise a placeholder */}
             {session.user.image ? (
                 <Image src={session.user.image} alt="User Avatar" width={32} height={32} className="rounded-full" />
             ) : (

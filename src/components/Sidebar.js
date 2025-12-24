@@ -16,7 +16,7 @@ const navItems = [
     { name: "Dashboard", href: "/", icon: HomeIcon },
     { name: "Diet Log", href: "/diet", icon: FireIcon },
     { name: "Weight Log", href: "/weight", icon: ScaleIcon },
-     { name: "Sleep Log", href: "/sleep", icon: MoonIcon },
+    { name: "Sleep Log", href: "/sleep", icon: MoonIcon },
     { name: "Water Log", href: "/water", icon: BeakerIcon }
 ];
 

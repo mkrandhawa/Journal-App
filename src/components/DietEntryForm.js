@@ -67,7 +67,7 @@ export default function DietEntryForm({ onEntryCreated }) {
       const response = await fetch('/api/diet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload), // Send the converted payload
+        body: JSON.stringify(payload), 
       });
 
       const data = await response.json();
@@ -102,7 +102,6 @@ export default function DietEntryForm({ onEntryCreated }) {
             Daily Diet Entry
         </h2>
 
-        {/* --- 1. CORE TRACKING SECTION (Date and Target) --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-blue-50 p-6 rounded-2xl border border-blue-100">
             <InputField 
                 label="Date" 
@@ -126,7 +125,6 @@ export default function DietEntryForm({ onEntryCreated }) {
             />
         </div>
 
-        {/* --- 2. INTAKE SECTION --- */}
         <h3 className="text-xl font-semibold text-gray-700 pt-4">Intake & Macros</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <InputField 
@@ -188,7 +186,6 @@ export default function DietEntryForm({ onEntryCreated }) {
             ></textarea>
         </div>
 
-        {/* --- 4. Submit Button and Messages --- */}
         <div>
             {message && (
                 <div className={`p-3 mb-4 rounded-lg text-sm font-medium ${message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>

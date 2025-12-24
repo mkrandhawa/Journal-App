@@ -4,7 +4,7 @@ import {
     BeakerIcon, 
     CheckBadgeIcon, 
     ClockIcon, 
-    AdjustmentsHorizontalIcon 
+    ExclamationTriangleIcon 
 } from "@heroicons/react/24/outline";
 
 export default function WaterHistory({ history }) {
@@ -30,22 +30,20 @@ export default function WaterHistory({ history }) {
 
                 const percentage = Math.min(Math.round((entry.amountMl / entry.targetMl) * 100), 100);
                 const isGoalMet = percentage >= 100;
+                const isEndOfTheDay = Date.now() - new Date(entry.date).getTime() > 24 * 60 * 60 * 1000;
 
                 return (
                     <div 
                         key={entry._id || index}
                         className="group relative bg-white hover:bg-cyan-50/30 transition-all duration-500 p-6 rounded-[2.5rem] border border-slate-100 flex flex-col md:flex-row md:items-center gap-6 overflow-hidden shadow-sm hover:shadow-md"
                     >
-                        {/* Soft Azure Glow on Hover */}
                         <div className="absolute -inset-1 bg-gradient-to-r from-cyan-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                        {/* COLUMN 1: Date */}
                         <div className="relative z-10 md:w-32 flex-shrink-0">
                             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 mb-1">Entry Date</p>
                             <p className="text-sm font-bold text-slate-700 whitespace-nowrap">{date}</p>
                         </div>
 
-                        {/* COLUMN 2: Amount (Volume) */}
                         <div className="relative z-10 md:w-32 flex-shrink-0">
                             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-400 mb-1">Total Intake</p>
                             <p className="text-xl font-black text-slate-900">
@@ -53,7 +51,6 @@ export default function WaterHistory({ history }) {
                             </p>
                         </div>
 
-                        {/* COLUMN 3: Visual Progress Bar */}
                         <div className="relative z-10 flex-grow max-w-xs">
                             <div className="flex justify-between items-end mb-1">
                                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-300">Goal Reach</p>
@@ -69,19 +66,23 @@ export default function WaterHistory({ history }) {
                             </div>
                         </div>
 
-                        {/* COLUMN 4: Status Badge */}
                         <div className="relative z-10 md:w-40 flex justify-end">
                             {isGoalMet ? (
                                 <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500 text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-cyan-200 animate-in zoom-in">
                                     <CheckBadgeIcon className="w-4 h-4" />
                                     Goal Achieved
                                 </div>
-                            ) : (
+                            ) : ( isEndOfTheDay ? (
+                                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-100 text-slate-400 text-[10px] font-black uppercase tracking-widest border border-slate-200">
+                                    <ExclamationTriangleIcon className="w-4 h-4" />
+                                    Below Target
+                                </div>
+                                ) : (
                                 <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-widest border border-slate-100">
                                     <ClockIcon className="w-4 h-4" />
                                     In Progress
                                 </div>
-                            )}
+                            ))}
                         </div>
                     </div>
                 );
