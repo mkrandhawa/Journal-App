@@ -8,7 +8,6 @@ export default function WeightHistory({ history }) {
 
         const diff = current - previousEntry.weight;
         
-        // Logic: Red for gain > 0.5kg, Green for loss > 0.1kg
         if (diff > 0.5) return { diff: `+${diff.toFixed(1)}`, color: 'text-red-500', icon: ArrowTrendingUpIcon };
         if (diff < -0.1) return { diff: `${diff.toFixed(1)}`, color: 'text-green-500', icon: ArrowTrendingDownIcon };
         return { diff: 'Stable', color: 'text-blue-400', icon: MinusIcon };

@@ -46,22 +46,18 @@ export default function DietHistory({ history}) {
                             </span>
                         </div>
 
-                        {/* Metrics Grid */}
                         <div className="grid grid-cols-5 text-center divide-x divide-gray-100 mb-4"> 
                             
-                            {/* 1. KCAL CONSUMED (EMPHASIZED) */}
                             <div className="p-2 bg-blue-50 rounded-l-xl">
                                 <p className="text-3xl font-extrabold text-blue-700">{entry.caloriesConsumed}</p>
                                 <p className="text-xs text-blue-500 font-semibold mt-1">KCAL CONSUMED</p>
                             </div>
                             
-                            {/* 2. TARGET (Secondary Emphasis) */}
                             <div className="p-2">
                                 <p className="text-xl font-bold text-gray-700">{entry.targetCalories}</p>
                                 <p className="text-xs text-gray-400 mt-1">Target</p>
                             </div>
                             
-                            {/* 3. MACROS (Tertiary) */}
                             <div className="p-2">
                                 <p className="text-xl font-bold text-gray-700">{entry.proteinGrams || 0}g</p>
                                 <p className="text-xs text-gray-400 mt-1">Protein</p>
@@ -76,7 +72,6 @@ export default function DietHistory({ history}) {
                             </div>
                         </div>
                         
-                        {/* --- NOTES SECTION --- */}
                         {entry.notes && (
                             <div className="mt-4 pt-3 border-t border-gray-100">
                                 <p className="text-sm font-semibold text-gray-600 mb-1 flex items-center">

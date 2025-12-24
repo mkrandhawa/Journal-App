@@ -131,7 +131,7 @@ export default function WeightEntryForm({ onEntryCreated, lastEntry }) {
                     required 
                 />
                 <InputField 
-                    label="Daily Target (kg)" 
+                    label="Target (kg)" 
                     name="targetWeight" 
                     type="text" 
                     inputMode="decimal" 
