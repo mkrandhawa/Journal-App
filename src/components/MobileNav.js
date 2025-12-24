@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import {
     HomeIcon,
     FireIcon,
@@ -23,6 +23,7 @@ const navItems = [
 
 export default function MobileNav() {
     const pathname = usePathname();
+    const {data:session, status} = useSession();
 
     return (
         <aside className="md:hidden">
@@ -37,6 +38,9 @@ export default function MobileNav() {
                     const isActive = pathname === href;
 
                     if (href === '/logout') {
+                        if (status === 'unauthenticated') {
+                            return null;
+                        }
                         return (
                             <button
                                 key={href}
