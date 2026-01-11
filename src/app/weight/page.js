@@ -164,7 +164,7 @@ export default function WeightTrackerPage() {
                                 <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></div>
                                 <span className="text-sm font-bold text-indigo-700">
                                     {history.length > 1 
-                                        ? `${(history[0].weight - history[history.length - 1].weight).toFixed(1)}kg total change` 
+                                        ? `${(history[0].weight - history[history.length - 1].weight).toFixed(1)}kg total loss based on last 10 entries` 
                                         : "Tracking started"}
                                 </span>
                             </div>
