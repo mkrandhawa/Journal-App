@@ -14,11 +14,13 @@ export default function WeightTrackerPage() {
     const [history, setHistory] = useState([]);
     const [latestEntry, setLatestEntry] = useState(null);
     const [dataLoading, setDataLoading] = useState(true);
+    const [firstEntry, setFirstEntry] = useState(null);
 
     const todayStr = new Date().toISOString().split('T')[0];
     const hasEnteredToday = history.length > 0 && 
         new Date(history[0].date).toISOString().split('T')[0] === todayStr;
 
+    
     const handleEntryCreated = (newEntry) => {
         setHistory(prev => [newEntry, ...prev]);
         setLatestEntry(newEntry); 
@@ -31,6 +33,7 @@ export default function WeightTrackerPage() {
             const result = await response.json();
             if (response.ok) {
                 setHistory(result.data);
+                setFirstEntry(result.firstEntry);
             }
         } catch (error) {
             console.error("Error fetching weight history:", error);
@@ -71,12 +74,10 @@ export default function WeightTrackerPage() {
                     </p>
                 </div>
 
-                {/* --- MAIN ACTION AREA --- */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                     
                     <div className="lg:col-span-2">
                         {hasEnteredToday ? (
-                            /* SUCCESS CARD: DIET STYLE GRADIENT */
                             <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 to-violet-700 p-12 rounded-[3.5rem] shadow-2xl text-white flex flex-col items-center text-center space-y-8 animate-in zoom-in duration-500">
                                 <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse" />
                                 
@@ -109,7 +110,6 @@ export default function WeightTrackerPage() {
                         )}
                     </div>
 
-                    {/* --- SIDEBAR: SMALL CHART OR STATS --- */}
                     <div className="lg:col-span-1 space-y-8">
                         <div className="bg-white p-8 rounded-[3rem] border border-indigo-50 shadow-xl shadow-indigo-900/5">
                             <div className="flex items-center gap-2 mb-6 text-indigo-800">
@@ -132,7 +132,7 @@ export default function WeightTrackerPage() {
                                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total loss</p>
                                 <p className="text-3xl font-black text-indigo-600">
                                     {history.length > 1 
-                                        ? `${(history[0].weight - history[history.length - 1].weight).toFixed(1)}kg` 
+                                        ? `${(history[0].weight - firstEntry).toFixed(2)}kg` 
                                         : "0.0kg"}
                                 </p>
                             </div>
@@ -142,13 +142,11 @@ export default function WeightTrackerPage() {
 
                 {/* --- FULL CHART SECTION --- */}
                 <div className="relative group">
-                    {/* Background Decorative Glow (Soft Indigo) */}
                     <div className="absolute -inset-1 bg-gradient-to-r from-indigo-100 to-violet-100 rounded-[4rem] blur-2xl opacity-50 group-hover:opacity-75 transition duration-1000"></div>
                     
                     <div className="relative bg-white/80 backdrop-blur-xl p-10 rounded-[3.5rem] border border-white shadow-2xl shadow-indigo-100/50">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 px-2">
                             
-                            {/* Left Side: Title & Icon */}
                             <div className="flex items-center gap-4">
                                 <div className="relative">
                                     <div className="absolute inset-0 bg-indigo-200 blur-lg opacity-40 animate-pulse"></div>
@@ -162,7 +160,6 @@ export default function WeightTrackerPage() {
                                 </div>
                             </div>
 
-                            {/* Right Side: Quick Insight Pill */}
                             <div className="flex items-center gap-3 px-5 py-2.5 bg-indigo-50/50 border border-indigo-100/50 rounded-2xl">
                                 <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></div>
                                 <span className="text-sm font-bold text-indigo-700">
@@ -173,7 +170,6 @@ export default function WeightTrackerPage() {
                             </div>
                         </div>
 
-                        {/* The Chart Container */}
                         <div className="w-full min-h-[350px] animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
                             <WeightChart history={history} />
                         </div>

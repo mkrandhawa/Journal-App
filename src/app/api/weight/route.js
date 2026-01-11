@@ -17,11 +17,15 @@ export async function GET(request) {
         
         const userId = session.user.id;
 
-        const weightEntries = await WeightEntry.find({ userId }).sort({ date: -1 }).limit(10).lean();
-
+        const [weightEntries, firstWeightEntry] = await Promise.all([
+            WeightEntry.find({ userId }).sort({ date: -1 }).limit(10).lean(),
+            WeightEntry.findOne({ userId }).sort({ date: 1 }).lean()
+        ]);
+        
         return NextResponse.json({ 
             message: 'Weight entries retrieved successfully.', 
-            data: weightEntries 
+            data: weightEntries,
+            firstEntry: firstWeightEntry.weight
         }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ 
