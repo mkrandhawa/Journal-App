@@ -20,7 +20,7 @@ function InputField ({ label, name, type = 'number', placeholder, required = fal
           required={required}
           min={min}
           step={step}
-          className={`w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition duration-150 ${Icon ? 'pl-10' : ''} text-gray-600`}
+          className={`sm: w-1/3 w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition duration-150 ${Icon ? 'pl-10' : ''} text-gray-600`}
         />
       </div>
     </div>
