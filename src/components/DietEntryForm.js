@@ -169,7 +169,6 @@ export default function DietEntryForm({ onEntryCreated }) {
             </div>
         </div>
 
-        {/* --- 3. NOTES --- */}
         <div className="flex flex-col">
             <label htmlFor="notes" className="mb-2 text-sm font-medium text-gray-700 flex items-center">
                 <PencilSquareIcon className="w-4 h-4 mr-1 text-gray-400" />
